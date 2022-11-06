@@ -1,10 +1,19 @@
-const express=require('express')
+const express = require("express");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const router = express.Router();
 
-const router=express.Router()
+router.post("/login", (req, res) => {
+  //   res.send("User Login");
+  //DB
+  //OK
 
-router.post('/login',(req,res)=>{
-    res.send("User Login")
-})
+  const username = req.body.username;
+  const user = { name: username }; //payload
 
+  const token = jwt.sign(user,process.env.TOKEN_KEY);
 
-module.exports=router
+  res.send({ token });
+});
+
+module.exports = router;
